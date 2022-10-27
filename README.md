@@ -62,9 +62,6 @@ Non-interactive Mode:
     git clone https://github.com/AvelinoC5/holbertonschool-AirBnB_clone.git
 
 ## AUTHORS
--
-Avelino Carvajal 
+- Avelino Carvajal C18
 
-David Santiago Arias Lombana 
-
-Cohorte 18
+- David Santiago Arias Lombana C18
