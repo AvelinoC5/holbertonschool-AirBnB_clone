@@ -20,3 +20,34 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """Empty line"""
         pass
+
+
+    def do_create(self, line):
+        """Create instance specified by user"""
+        if len(line) == 0:
+            print("** class name missing **")
+        elif line not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+        else:
+            instance = eval(line)()
+            instance.save()
+            print(instance.id)
+
+    def do_show(self, line):
+        """Print string representation: name and id"""
+        if len(line) == 0:
+            print("** class name missing **")
+            return
+        args = parse(line)
+        if args[0] not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
+        try:
+            if args[1]:
+                name = "{}.{}".format(args[0], args[1])
+                if name not in storage.all().keys():
+                    print("** no instance found **")
+                else:
+                    print(storage.all()[name])
+        except IndexError:
+            print("** instance id missing **")
