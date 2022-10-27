@@ -1,61 +1,46 @@
 #!/usr/bin/python3
-
-"""Entry to command interpreter"""
+""" Program that contains the entry point of the command interpreter """
 
 import cmd
 from models.base_model import BaseModel
-from models import storage
 from models.user import User
 from models.state import State
-from models.city import City
 from models.amenity import Amenity
-from models.place import Place
+from models.city import City
 from models.review import Review
+from models.place import Place
+from models import storage
+
 
 class HBNBCommand(cmd.Cmd):
-    """Entry to command interpreter"""
+    """ init Command Prompt """
+    prompt = "(hbnb) "
+    level = ["BaseModel", "City", "State",
+             "User", "Place", "Review", "Amenity"]
 
-    prompt = "(hbnb)"
-
-    def do_quit(self, line):
-        """Exit on quit"""
+    def do_EOF(self, args):
+        """CTRl-D to exit\n"""
+        print()
         return True
 
-    def do_EOF(self, line):
-        """Exit on Ctrl-D"""
+    def do_quit(self, args):
+        """Quit command to exit the program\n"""
         return True
 
     def emptyline(self):
-        """Empty line"""
+        """ENTER shouldn’t execute anything"""
         pass
 
-
     def do_create(self, line):
-        """Create instance specified by user"""
-        if len(line) == 0:
+        """Create a new instance of BaseModel"""
+        if not line:
             print("** class name missing **")
-        elif line not in HBNBCommand.classes:
+            return None
+        elif (line not in self.level):
             print("** class doesn't exist **")
+            return None
         else:
-            instance = eval(line)()
-            instance.save()
-            print(instance.id)
+            my_inst = eval(line + "()")
+            my_inst.save()
+            print(my_inst.id)
 
-    def do_show(self, line):
-        """Print string representation: name and id"""
-        if len(line) == 0:
-            print("** class name missing **")
-            return
-        args = parse(line)
-        if args[0] not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        try:
-            if args[1]:
-                name = "{}.{}".format(args[0], args[1])
-                if name not in storage.all().keys():
-                    print("** no instance found **")
-                else:
-                    print(storage.all()[name])
-        except IndexError:
-            print("** instance id missing **")
