@@ -133,3 +133,43 @@ class HBNBCommand(cmd.Cmd):
                 # attr = n[3].strip('\'\"')
                 setattr(obj[key], n[2], n[3])
                 storage.save()
+
+    def do_count(self, line):
+        """ retrieve the number of instances of a class """
+        count = 0
+        for key in storage.all().keys():
+            if line in key:
+                count += 1
+        print(count)
+
+    def default(self, line):
+        """ Retrieve instances based on methods, i.e. <class name>.all() """
+        n = line.split('.')
+        inst = n[0]
+        if n[1] == "all()":
+            self.do_all(inst)
+        elif n[1] == "count()":
+            self.do_count(inst)
+        elif n[1].startswith('show'):
+            idsp = n[1].split('"')
+            # BaseModel valid_id, idsp[1] to get the id
+            line = inst + ' ' + idsp[1]
+            self.do_show(line)
+        elif n[1].startswith('destroy'):
+            idsp = n[1].split('"')
+            line = inst + ' ' + idsp[1]
+            self.do_destroy(line)
+        elif n[1].startswith('update'):
+            sp = n[1].split('"')
+            line = inst + ' ' + sp[1] + ' ' + sp[3] + ' ' + sp[5]
+            self.do_update(line)
+
+if __name__ == '__main__':
+    HBNBCommand().cmdloop()
+    # import sys
+    # non-interactive mode
+    # if len(sys.argv) > 1:
+    # Since onecmd () takes a single string as input
+    # the arguments of the program must be joined before passing them
+    # HBNBCommand().onecmd(' '.join(sys.argv[1:]))
+    # HBNBCommand().cmdloop()
