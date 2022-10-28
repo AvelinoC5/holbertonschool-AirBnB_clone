@@ -18,17 +18,23 @@ class HBNBCommand(cmd.Cmd):
     level = ["BaseModel", "City", "State",
              "User", "Place", "Review", "Amenity"]
 
+    def do_quit(self, args):
+        """
+        Quit command exits out of the command interpreter
+        """
+        quit()
+
+    def do_EOF(self, args):
+        """
+        EOF command exits out of the command interpreter
+        """
+        quit()
+
     def emptyline(self):
-        """Ignores empty spaces"""
-        pass
-
-    def do_quit(self, line):
-        """Quit command to exit the program"""
-        return True
-
-    def do_EOF(self, line):
-        """Quit command to exit the program at end of file"""
-        return True
+        """
+        Returns back to the prompt
+        """
+        return
 
     def do_create(self, line):
         """Create a new instance of BaseModel"""
