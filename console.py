@@ -19,17 +19,15 @@ class HBNBCommand(cmd.Cmd):
              "User", "Place", "Review", "Amenity"]
 
     def do_EOF(self, args):
-        """CTRl-D to exit\n"""
-        print()
-        return True
+        """ exit on Ctrl-D and EOF """
+        raise SystemExit
 
     def do_quit(self, args):
-        """Quit command to exit the program\n"""
-        return True
+        """ exit on quit"""
+        raise SystemExit
 
     def emptyline(self):
-        """ENTER shouldn’t execute anything"""
-        pass
+        return False
 
     def do_create(self, line):
         """Create a new instance of BaseModel"""
